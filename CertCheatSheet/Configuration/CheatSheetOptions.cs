@@ -13,7 +13,7 @@ public sealed class CheatSheetOptions
 	/// <summary>
 	/// Абсолютный путь либо путь относительно каталога приложения.
 	/// </summary>
-	public string? FilePath { get; set; } = "bpm-answers.txt";
+	public string? FilePath { get; set; } = "answers.txt";
 
 	/// <summary>
 	/// Символы начала ответа; дополнительные символы не определяют правильность.
