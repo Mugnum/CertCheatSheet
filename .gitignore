@@ -1,0 +1,21 @@
+# Результаты сборки и публикации.
+**/bin/
+**/obj/
+artifacts/
+
+# Локальные настройки Visual Studio.
+.vs/
+*.user
+*.suo
+
+# Результаты тестов и покрытия кода.
+**/TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# Внешние файлы ответов и временные файлы хранилища.
+**/bpm-answers.txt
+**/answers.txt
+*.txt.lock
+.*.tmp

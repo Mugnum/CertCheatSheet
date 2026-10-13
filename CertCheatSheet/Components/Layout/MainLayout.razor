@@ -1,0 +1,24 @@
+@inherits LayoutComponentBase
+
+<a class="skip-link" href="#main-content">Перейти к содержимому</a>
+<header class="site-header">
+	<a class="brand" href="/">
+		<span class="brand-icon" aria-hidden="true">✓</span>
+		<span>CertCheatSheet</span>
+	</a>
+	<nav aria-label="Основная навигация">
+		<NavLink href="/" Match="NavLinkMatch.All">Вопросы</NavLink>
+		@if (_options.Value.EnableEditing)
+		{
+			<NavLink href="/questions/new">Добавить вопрос</NavLink>
+		}
+		<NavLink href="/format">Формат файла</NavLink>
+	</nav>
+</header>
+<main id="main-content" class="content">
+	@Body
+</main>
+<div id="blazor-error-ui" role="alert" data-nosnippet>
+	Произошла ошибка приложения. <a href="" class="reload">Обновить страницу</a>
+	<button type="button" class="dismiss" aria-label="Закрыть уведомление">×</button>
+</div>

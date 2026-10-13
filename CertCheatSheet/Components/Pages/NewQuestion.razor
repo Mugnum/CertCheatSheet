@@ -1,0 +1,63 @@
+@page "/questions/new"
+
+<PageTitle>Добавить вопрос — CertCheatSheet</PageTitle>
+<div class="page-heading">
+	<div><span class="eyebrow">Пополнение базы</span><h1>Добавить вопрос</h1></div>
+	<a href="/" class="button secondary">К вопросам</a>
+</div>
+@if (!_options.Value.EnableEditing)
+{
+	<div class="notice warning" role="status">Добавление вопросов отключено в настройках приложения.</div>
+}
+else
+{
+	<p class="intro">Вопрос будет добавлен в <strong>@System.IO.Path.GetFileName(_store.SourcePath)</strong>.
+		Правильные варианты запишутся первыми. Остальные вопросы сохранят свой порядок.</p>
+	@if (_error is not null)
+	{
+		<div class="notice error" role="alert">@_error</div>
+	}
+	@if (_success is not null)
+	{
+		<div class="notice success" role="status">@_success <a href="/">Открыть вопросы</a></div>
+	}
+	<form class="question-form" @onsubmit="SaveQuestionAsync" @onsubmit:preventDefault>
+		<fieldset disabled="@_isSaving">
+			<label class="field-label" for="new-question">Текст вопроса</label>
+			<textarea id="new-question" rows="3" required @bind="_questionText" @bind:event="oninput"
+					  placeholder="Введите вопрос…"></textarea>
+			<div class="section-heading"><h2>Варианты ответа</h2><span class="muted">Можно выбрать несколько правильных</span></div>
+			@for (var index = 0; index < _answers.Count; index++)
+			{
+				var answer = _answers[index];
+				<div class="answer-editor" @key="answer.Id">
+					<div class="answer-editor-heading">
+						<label class="field-label" for="@($"answer-{answer.Id}")">Ответ @(index + 1)</label>
+						<div class="answer-actions">
+							<label class="sr-only" for="@($"marker-{answer.Id}")">Метка ответа @(index + 1)</label>
+							<select id="@($"marker-{answer.Id}")" @bind="answer.Marker">
+								<option value="+">+ Правильный</option>
+								<option value="-">− Другой вариант</option>
+								@foreach (var marker in _customMarkers)
+								{
+									<option value="@marker">@marker Дополнительная метка</option>
+								}
+							</select>
+							<button type="button" class="button text-button" disabled="@(_answers.Count == 1)"
+									aria-label="@($"Удалить ответ {index + 1}")" @onclick="() => RemoveAnswer(answer)">Удалить</button>
+						</div>
+					</div>
+					<textarea id="@($"answer-{answer.Id}")" rows="2" required @bind="answer.Text" @bind:event="oninput"
+							  placeholder="Введите вариант ответа…"></textarea>
+				</div>
+			}
+			<button type="button" class="button secondary" @onclick="AddAnswer">+ Ещё вариант</button>
+			<p class="form-hint">Если правильный ответ неизвестен, оставьте все варианты с минусом.
+				Пустые строки разделяют вопросы; внутри текста используйте обычный перенос.</p>
+			<div class="form-footer">
+				<button type="submit" class="button primary">@(_isSaving ? "Сохранение…" : "Сохранить в файл")</button>
+				<a href="/format">Правила формата</a>
+			</div>
+		</fieldset>
+	</form>
+}

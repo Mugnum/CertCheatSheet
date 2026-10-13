@@ -1,0 +1,14 @@
+<script type="module" src="@Assets["Components/Layout/ReconnectModal.razor.js"]"></script>
+<dialog id="components-reconnect-modal" data-nosnippet aria-label="Соединение с сервером">
+	<div class="components-reconnect-container">
+		<p class="components-reconnect-first-attempt-visible">Восстанавливаем соединение с сервером…</p>
+		<p class="components-reconnect-repeated-attempt-visible">
+			Повторная попытка через <span id="components-seconds-to-next-attempt"></span> с.
+		</p>
+		<p class="components-reconnect-failed-visible">Сервер недоступен. Проверьте, что приложение запущено.</p>
+		<button type="button" id="components-reconnect-button" class="button primary components-reconnect-failed-visible">Повторить</button>
+		<p class="components-pause-visible">Сессия приостановлена сервером.</p>
+		<p class="components-resume-failed-visible">Не удалось возобновить сессию.</p>
+		<button type="button" id="components-resume-button" class="button primary components-pause-visible components-resume-failed-visible">Продолжить</button>
+	</div>
+</dialog>

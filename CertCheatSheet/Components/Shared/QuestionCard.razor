@@ -1,0 +1,24 @@
+<article class="question-row">
+	<span class="question-number eyebrow">Вопрос @Number</span>
+	<div class="question-heading">
+		<h2 class="question-text">@Question.Text</h2>
+		@if (!Question.HasKnownCorrectAnswer)
+		{
+			<span class="unknown-badge">Правильный ответ не подтверждён</span>
+		}
+	</div>
+	<ul class="answers">
+		@foreach (var answer in Question.Answers)
+		{
+			var appearance = GetAnswerAppearance(answer);
+			<li class="answer">
+				<span class="answer-icon @appearance.CssClass" role="img" aria-label="@appearance.Label">@appearance.Symbol</span>
+				<span class="answer-text">@answer.Text</span>
+			</li>
+		}
+		@if (Question.Answers.IsEmpty)
+		{
+			<li class="muted">Ответы пока не указаны.</li>
+		}
+	</ul>
+</article>

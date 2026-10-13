@@ -1,0 +1,48 @@
+@page "/"
+
+<PageTitle>Вопросы — CertCheatSheet</PageTitle>
+
+<div class="page-heading">
+	<div><span class="eyebrow">База ответов</span><h1>Вопросы и ответы</h1></div>
+	<button type="button" class="button secondary" disabled="@_isReloading" @onclick="ReloadFileAsync">
+		@(_isReloading ? "Чтение…" : "Обновить файл")
+	</button>
+</div>
+<section class="toolbar" aria-label="Поиск и настройки отображения">
+	<label class="search-label" for="question-search">Поиск по вопросам и ответам</label>
+	<input id="question-search" class="search" type="search" value="@_search"
+		   @oninput="ChangeSearch" placeholder="Введите слово или фразу…" />
+	<div class="filter-options">
+		<label><input type="checkbox" @bind="_showIncorrectAsRed" /> Выделять неправильные ответы</label>
+		<label><input type="checkbox" checked="@_onlyUnknown" @onchange="ChangeUnknownFilter" /> Только неподтверждённые</label>
+	</div>
+	<div class="toolbar-status" role="status">
+		<span>Найдено <strong>@_filteredQuestions.Length</strong> из @_snapshot.Questions.Length</span>
+		<span>Файл: @System.IO.Path.GetFileName(_snapshot.SourcePath)</span>
+		@if (_snapshot.LoadedAt is not null)
+		{
+			<span>Обновлён @_snapshot.LoadedAt.Value.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</span>
+		}
+	</div>
+</section>
+
+<FileStatus Snapshot="@_snapshot" />
+
+@if (_filteredQuestions.Length == 0)
+{
+	<div class="empty-state">
+		<h2>@(_snapshot.Questions.IsEmpty ? "Вопросов пока нет" : "Ничего не найдено")</h2>
+		<p>@(_snapshot.Questions.IsEmpty ? "Загрузите файл с ответами или добавьте вопрос через форму." : "Попробуйте другой запрос или отключите фильтр.")</p>
+		<a class="button secondary" href="/format">Посмотреть формат файла</a>
+	</div>
+}
+else
+{
+	<section class="questions" aria-label="Найденные вопросы">
+		@foreach (var item in _filteredQuestions)
+		{
+			<QuestionCard @key="item.Number" Question="@item.Question" Number="@item.Number"
+						  ShowIncorrectAnswersAsRed="@_showIncorrectAsRed" />
+		}
+	</section>
+}

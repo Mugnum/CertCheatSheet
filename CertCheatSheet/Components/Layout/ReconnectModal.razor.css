@@ -1,0 +1,39 @@
+.components-reconnect-first-attempt-visible,
+.components-reconnect-repeated-attempt-visible,
+.components-reconnect-failed-visible,
+.components-pause-visible,
+.components-resume-failed-visible {
+	display: none;
+}
+
+#components-reconnect-modal.components-reconnect-show .components-reconnect-first-attempt-visible,
+#components-reconnect-modal.components-reconnect-retrying .components-reconnect-repeated-attempt-visible,
+#components-reconnect-modal.components-reconnect-failed .components-reconnect-failed-visible,
+#components-reconnect-modal.components-reconnect-paused .components-pause-visible,
+#components-reconnect-modal.components-reconnect-resume-failed .components-resume-failed-visible {
+	display: block;
+}
+
+#components-reconnect-modal {
+	max-width: min(28rem, calc(100% - 2rem));
+	padding: 2rem;
+	border: 1px solid #d7e0e7;
+	border-radius: 12px;
+	color: #253848;
+	background: #fff;
+	box-shadow: 0 12px 50px #10263b33;
+}
+
+#components-reconnect-modal::backdrop {
+	background: #152c4566;
+}
+
+.components-reconnect-container {
+	display: grid;
+	gap: 1rem;
+	text-align: center;
+}
+
+#components-reconnect-modal p {
+	margin: 0;
+}

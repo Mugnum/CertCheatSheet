@@ -1,0 +1,23 @@
+@if (Snapshot.Error is not null)
+{
+	<div class="notice error" role="alert">
+		<strong>Не удалось прочитать файл</strong>
+		<p>@Snapshot.Error</p>
+		@if (Snapshot.LoadedAt is not null)
+		{
+			<p>Показана последняя успешно загруженная версия.</p>
+		}
+	</div>
+}
+@if (!Snapshot.Warnings.IsEmpty)
+{
+	<details class="notice warning">
+		<summary>Замечания к формату: @Snapshot.Warnings.Length</summary>
+		<ul>
+			@foreach (var warning in Snapshot.Warnings)
+			{
+				<li>@warning</li>
+			}
+		</ul>
+	</details>
+}

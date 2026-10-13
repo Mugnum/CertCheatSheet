@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="CertCheatSheet/CertCheatSheet.csproj" />
+	<Project Path="CertCheatSheet.Tests/CertCheatSheet.Tests.csproj" />
+</Solution>
